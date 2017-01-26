@@ -1,0 +1,18 @@
+{
+	"name": "slack-coding-challenge",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "./node_modules/webpack/bin/webpack.js -p --env.prod",
+    "build:dev": "./node_modules/webpack/bin/webpack.js --env.dev",
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --env.dev",
+    "start": "./node_modules/http-server/bin/http-server",
+    "test": "./node_modules/karma/bin/karma start"
+  },
+  "devDependencies": {
+    "webpack": "^1.14.0",
+    "webpack-config-utils": "^2.3.0",
+    "webpack-dev-server": "^1.16.2",
+    "webpack-validator": "^2.3.0"
+  }
+}

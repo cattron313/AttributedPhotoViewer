@@ -1,8 +1,13 @@
+.body {
+	font-size: 16px;
+}
+
 .photos-container {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-content: space-between;
+	margin-bottom: 20px;
 }
 
 .photo {
@@ -17,7 +22,12 @@
 	cursor: zoom-in;
 }
 
-.photo > i.fa {
-	margin: 60px 58px;
-	color: #eee;
+.photo > img {
+	margin: 55px;
+	width: 90px;
+}
+
+.attribution {
+	text-align: center;
+	font-size: 0.75rem;
 }

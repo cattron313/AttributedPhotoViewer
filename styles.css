@@ -6,8 +6,18 @@
 }
 
 .photo {
-	background-color: red;
+	background-color: darkgrey;
 	width: 200px;
 	height: 200px;
 	margin: 15px;
+	box-shadow: 10px 10px 1px #ededed;
+}
+
+.photo:hover {
+	cursor: zoom-in;
+}
+
+.photo > i.fa {
+	margin: 60px 58px;
+	color: #eee;
 }

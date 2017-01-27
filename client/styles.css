@@ -41,3 +41,35 @@
 	text-align: center;
 	font-size: 0.75rem;
 }
+
+#modal {
+	position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+}
+
+#modal.hidden {
+	display: none;
+}
+
+#photo-viewer {
+	position: relative;
+}
+
+/* close [x] icon */
+#modal i {
+	color: #e4e4e4;
+	font-style: normal;
+	position: absolute;
+	right: 0;
+	font-size: 2rem;
+}
+
+#modal i:hover {
+	color: white;
+	cursor: pointer;
+}

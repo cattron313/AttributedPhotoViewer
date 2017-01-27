@@ -9,9 +9,14 @@ function ViewManager() {
 				 * may not always be 20 (async updates of view)
 				 */
 				if (i < json.length) {
+					elems.item(i).firstChild.addEventListener('load', () => {
+						elems.item(i).classList.remove('empty');
+					}, { once: true });
 					elems.item(i).firstChild.setAttribute('src', json[i].urls.thumb);
 				  elems.item(i).firstChild.setAttribute('data-color', json[i].color);
-				  elems.item(i).classList.remove('empty');
+				  elems.item(i).firstChild.setAttribute('data-photographer', json[i].user.name);
+				  elems.item(i).firstChild.setAttribute('data-profile', json[i].user.links.html);
+				  elems.item(i).firstChild.setAttribute('data-photo-url', json[i].urls.full);
 				} else {
 					elems.item(i).remove();
 				}

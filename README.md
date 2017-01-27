@@ -1,6 +1,6 @@
 # Slack Coding Challenge
 
-For this challenge, I will be implementing a photo viewer in a grid layout. To enlarge each image, I will create my own UI similar to [Lightbox][http://lokeshdhakar.com/projects/lightbox2/].
+For this challenge, I will be implementing a photo viewer in a grid layout. To enlarge each image, I will create my own UI similar to [Lightbox][http://lokeshdhakar.com/projects/lightbox2/]. I decided to create a photo viewer of Unsplash's currated list of photos with attribution to the photographers who took these photos.
 
 ### Program Setup
 Start the program in 3 simple steps!

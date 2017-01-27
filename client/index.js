@@ -1,9 +1,10 @@
 (function (win) {
+	const app = require('./app');
 	if (win.document.readyState === 'complete') {
-		console.log("IIIIIIIII'MMMMMMM READY");
+		app.init();
 	} else {
 		win.addEventListener("DOMContentLoaded", () => {
-			console.log("I had to wait a little but....","IIIIIIIII'MMMMMMM READY");
+			app.init();
 		}, { once: true });
 	}
 })(window);

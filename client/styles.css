@@ -2,7 +2,7 @@
 	font-size: 16px;
 }
 
-.photos-container {
+#photos-container {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -11,20 +11,30 @@
 }
 
 .photo {
+	margin: 15px;
+}
+
+.photo.empty {
 	background-color: darkgrey;
 	width: 200px;
 	height: 200px;
-	margin: 15px;
 	box-shadow: 10px 10px 1px #ededed;
 }
 
-.photo:hover {
-	cursor: zoom-in;
+.photo > img {
+		box-shadow: 10px 10px 1px #ededed;
+		max-height: 150px;
 }
 
-.photo > img {
+.photo > img:hover {
+		cursor: zoom-in;
+}
+
+.photo.empty > img {
 	margin: 55px;
 	width: 90px;
+	box-shadow: none;
+	cursor: auto;
 }
 
 .attribution {

@@ -5,7 +5,7 @@ var webpack = require('webpack');
 var ifUtils = webpackUtils.getIfUtils(process.env);
 
 module.exports = webpackValidator(webpackUtils.removeEmpty({
-	entry: './index.js',
+	entry: './client/index.js',
 	output: {
 		path: path.resolve('build'),
 		publicPath: '/build/',

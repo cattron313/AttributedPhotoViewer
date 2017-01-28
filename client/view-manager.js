@@ -21,6 +21,7 @@ function ViewManager() {
 					elems.item(i).remove();
 				}
 			}
+			this.resizeModal();
 		},
 		addNewImages() {
 			const container = document.getElementById('photos-container');
@@ -32,9 +33,21 @@ function ViewManager() {
 				wrapper.appendChild(img);
 				container.appendChild(wrapper); 
 			}
+			this.resizeModal();
 		},
 		hasImagePlaceholders() {
 			return document.querySelectorAll(".photo.empty") > 0;
+		},
+		resizeModal() {
+			const modal = document.getElementById('modal');
+			if (!modal.classList.contains('hidden')) {
+				if (window.innerHeight > document.body.clientHeight) {
+				//if window height larger than document height, set modal height to window height
+					modal.style.height = `${window.innerHeight}px`;
+				} else {
+					modal.style.height = `${document.body.clientHeight}px`;
+				}
+			}
 		}
 	};
 }

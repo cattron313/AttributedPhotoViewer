@@ -38,27 +38,33 @@ function App() {
 					const photoUrl = el.getAttribute('data-photo-url');
 					const profileUrl = el.getAttribute('data-profile');
 					const photographer = el.getAttribute('data-photographer');
+
 					const photoViewerImg = document.querySelector('#photo-viewer img');
-					
 					photoViewerImg.setAttribute('src', photoUrl);
-					const photographerAttribution = `<a href="${profileUrl}">${photographer}</a>`;
-					document.querySelector('#photo-viewer span').innerHTML = 'Photo by ' + photographerAttribution +
-																											' / <a href="http://unsplash.com/">Unsplash</a>';
-					if (el.width <= el.height) { //taller than it is wide
+					if (el.width <= el.height) { //if image is, taller than it is wide
 						photoViewerImg.setAttribute('height', window.innerHeight * 0.9);
 					} else {
 						photoViewerImg.setAttribute('width', window.innerWidth * 0.9);
 					}
+
+					const photographerAttribution = `<a href="${profileUrl}">${photographer}</a>`;
+					document.querySelector('#photo-viewer span').innerHTML = 'Photo by ' +
+									photographerAttribution + ' / <a href="http://unsplash.com/">Unsplash</a>';
+
 					document.getElementById('modal').classList.remove('hidden');
+					view.resizeModal();
 				}
 			});
 
-			//close dialog
+			//close modal lightbox dialog
 			document.querySelector('#modal i').addEventListener('click', function () {
 				document.getElementById('modal').classList.add('hidden');
 				const photoViewerImg = document.querySelector('#photo-viewer img');
 				photoViewerImg.removeAttribute('height');
 				photoViewerImg.removeAttribute('width');
+				photoViewerImg.setAttribute('src', '');
+
+				document.getElementById('modal').style.height = 'auto';
 			});
 
 			window.onscroll = function(e) {

@@ -1,5 +1,8 @@
-.body {
+body {
 	font-size: 16px;
+	font-family: 'Montserrat', sans-serif;
+	background-image: url('white_wall.png');
+	background-repeat: repeat;
 }
 
 #photos-container {
@@ -15,14 +18,16 @@
 }
 
 .photo.empty {
-	background-color: darkgrey;
-	width: 200px;
-	height: 200px;
-	box-shadow: 10px 10px 1px #ededed;
+	background-color: #9193a0;
+	width: 150px;
+	height: 150px;
+	box-shadow: inset 0px 0px 34px 5px black;
+  border: 5px ridge #5f6170;
 }
 
 .photo > img {
-		box-shadow: 10px 10px 1px #ededed;
+		box-shadow: 0px 0px 12px 2px rgba(0, 0, 0, 0.31);
+		border: 5px ridge #5f6170;
 		max-height: 150px;
 }
 
@@ -31,15 +36,27 @@
 }
 
 .photo.empty > img {
-	margin: 55px;
-	width: 90px;
+	margin: 40px;
+	width: 69px;
 	box-shadow: none;
+	border: none;
 	cursor: auto;
 }
 
 .attribution {
 	text-align: center;
-	font-size: 0.75rem;
+	font-size: 0.8rem;
+	margin-top: 10px;
+}
+
+#loading {
+	width: 40px;
+	position: fixed;
+	top: 0;
+}
+
+#loading.hidden {
+	display: none;
 }
 
 #modal {

@@ -1,12 +1,12 @@
 module.exports = {
-	getImages(callback, page) {
+	getImages(success, error, page) {
 		const httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function () {
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
 	      if (httpRequest.status === 200) {
-	        callback(JSON.parse(httpRequest.responseText));
+	        success(JSON.parse(httpRequest.responseText));
 	      } else {
-	        alert('There was a problem with the request. Please try again later.');
+					error();
 	      }
 	    }
 		};

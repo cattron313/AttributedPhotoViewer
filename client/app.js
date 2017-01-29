@@ -23,7 +23,6 @@ function App() {
 					el.style.boxShadow = `10px 10px 1px ${el.getAttribute('data-color')}`;
 				}
 			});
-
 			document.getElementById('photos-container').addEventListener('mouseout', function(e) {
 				const el = e.target;
 				if (el.nodeName === 'IMG') {
@@ -31,21 +30,26 @@ function App() {
 				}
 			});
 
-			 // adding click handler for lightbox effect
+			 // open modal lightbox
 			document.getElementById('photos-container').addEventListener('click', function(e) {
-				const el = e.target;
-				if (el.nodeName === 'IMG') {
-					const photoUrl = el.getAttribute('data-photo-url');
-					const profileUrl = el.getAttribute('data-profile');
-					const photographer = el.getAttribute('data-photographer');
+				const thumbImg = e.target;
+				if (thumbImg.nodeName === 'IMG') {
+					const photoUrl = thumbImg.getAttribute('data-photo-url');
+					const profileUrl = thumbImg.getAttribute('data-profile');
+					const photographer = thumbImg.getAttribute('data-photographer');
 
 					const photoViewerImg = document.querySelector('#photo-viewer img');
 					photoViewerImg.setAttribute('src', photoUrl);
-					if (el.width <= el.height) { //if image is, taller than it is wide
+					if (thumbImg.width <= thumbImg.height) { //if image is, taller than it is wide
 						photoViewerImg.setAttribute('height', window.innerHeight * 0.9);
 					} else {
-						photoViewerImg.setAttribute('width', window.innerWidth * 0.9);
+						//smaller size than height adjustment to make room for arrows
+						photoViewerImg.setAttribute('width', window.innerWidth * 0.87);
 					}
+
+					const photosContainer = document.getElementById('photos-container');
+					const thumbImgIndex = [].indexOf.call(photosContainer.children, thumbImg.parentNode);
+					photoViewerImg.setAttribute('data-index', thumbImgIndex);
 
 					const photographerAttribution = `<a href="${profileUrl}">${photographer}</a>`;
 					document.querySelector('#photo-viewer span').innerHTML = 'Photo by ' +
@@ -55,8 +59,7 @@ function App() {
 					view.resizeModal();
 				}
 			});
-
-			//close modal lightbox dialog
+			// close modal lightbox dialog
 			document.querySelector('#modal i').addEventListener('click', function () {
 				document.getElementById('modal').classList.add('hidden');
 				const photoViewerImg = document.querySelector('#photo-viewer img');
@@ -67,11 +70,48 @@ function App() {
 				document.getElementById('modal').style.height = 'auto';
 			});
 
+			const arrowBtns = document.getElementsByClassName('arrow-btn');
+			for (let i = 0; i < arrowBtns.length; i++) { //should only be two arrow buttons
+				arrowBtns[i].addEventListener('click', function(e) {
+					const photoViewerImg = document.querySelector('#photo-viewer img');
+					photoViewerImg.setAttribute('src', '');
+					photoViewerImg.removeAttribute('height');
+					photoViewerImg.removeAttribute('width');
+					const shownImgIndex = parseInt(photoViewerImg.getAttribute('data-index'));
+					const photosList = document.getElementById('photos-container').children;
+
+					// show previous image if left arrow. show next image if right arrow.
+					const thumbImgIndex = (e.target.id === 'left-arrow') ?
+																shownImgIndex + photosList.length - 1 : shownImgIndex + 1;
+					// making list circular
+					const thumbImg = photosList[thumbImgIndex % photosList.length].firstChild;
+					
+					const photoUrl = thumbImg.getAttribute('data-photo-url');
+					const profileUrl = thumbImg.getAttribute('data-profile');
+					const photographer = thumbImg.getAttribute('data-photographer');
+
+					photoViewerImg.setAttribute('src', photoUrl);
+					if (thumbImg.width <= thumbImg.height) { //if image is, taller than it is wide
+						photoViewerImg.setAttribute('height', window.innerHeight * 0.9);
+					} else {
+						//smaller size than height adjustment to make room for arrows
+						photoViewerImg.setAttribute('width', window.innerWidth * 0.87);
+					}
+					photoViewerImg.setAttribute('data-index', thumbImgIndex);
+
+					const photographerAttribution = `<a href="${profileUrl}">${photographer}</a>`;
+					document.querySelector('#photo-viewer span').innerHTML = 'Photo by ' +
+									photographerAttribution + ' / <a href="http://unsplash.com/">Unsplash</a>';
+
+					view.resizeModal();
+				});
+			}
+
 			window.onscroll = function(e) {
 				// reducing jitter and sensitivty on infinite scroll
 				if ((window.innerHeight + window.pageYOffset - document.body.scrollHeight) <= 10 &&
 					 (window.innerHeight + window.pageYOffset - document.body.scrollHeight) >= 0 &&
-					 !view.hasImagePlaceholders()) {
+					 !view.hasImagePlaceholders() && !view.modalOpen()) {
 					// you're at the bottom of the page
 					view.addNewImages();
 					utils.getImages(function(json) {

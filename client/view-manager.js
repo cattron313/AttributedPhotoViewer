@@ -38,9 +38,11 @@ function ViewManager() {
 		hasImagePlaceholders() {
 			return document.querySelectorAll(".photo.empty") > 0;
 		},
+		modalOpen() {
+			return !document.getElementById('modal').classList.contains('hidden');
+		},
 		resizeModal() {
-			const modal = document.getElementById('modal');
-			if (!modal.classList.contains('hidden')) {
+			if (this.modalOpen()) {
 				if (window.innerHeight > document.body.clientHeight) {
 				//if window height larger than document height, set modal height to window height
 					modal.style.height = `${window.innerHeight}px`;

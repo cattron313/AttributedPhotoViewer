@@ -48,7 +48,7 @@
   bottom: 0;
   width: 100%;
   z-index: 1;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.8);
   padding-top: 25px;
   display: flex;
   align-items: flex-start;

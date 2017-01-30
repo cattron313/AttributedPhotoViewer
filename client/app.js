@@ -43,20 +43,22 @@ function App() {
 			document.getElementById('loading').classList.remove('hidden');
 
 			const photosContainer = document.getElementById('photos-container');
-			// adding hover affect based on image color
-			photosContainer.addEventListener('mouseover', function(e) {
-				const el = e.target;
-				if (el.nodeName === 'IMG') {
-					el.style.borderColor = el.getAttribute('data-color');
-				}
-			});
-			photosContainer.addEventListener('mouseout', function(e) {
-				const el = e.target;
-				if (el.nodeName === 'IMG') {
-					el.style.borderColor = null;
-				}
-			});
-
+			if (!utils.isMobileDevice()) {
+				// adding hover affect based on image color
+				photosContainer.addEventListener('mouseover', function(e) {
+					const el = e.target;
+					if (el.nodeName === 'IMG') {
+						el.style.borderColor = el.getAttribute('data-color');
+					}
+				});
+				photosContainer.addEventListener('mouseout', function(e) {
+					const el = e.target;
+					if (el.nodeName === 'IMG') {
+						el.style.borderColor = null;
+					}
+				});
+			}
+			
 			// open modal lightbox
 			photosContainer.addEventListener('click', function(e) {
 				const thumbImg = e.target;

@@ -47,6 +47,7 @@ function ViewManager() {
 					img.addEventListener('error', (e) => {
 						img.parentNode.remove();
 					});
+					console.log(json[i].urls.thumb);
 					img.setAttribute('src', json[i].urls.thumb);
 				  img.setAttribute('data-color', json[i].color);
 				  img.setAttribute('data-photographer', json[i].user.name);
@@ -97,7 +98,7 @@ function ViewManager() {
 			const photoViewerImg = document.querySelector('#photo-viewer img');
 			const photosContainer = document.getElementById('photos-container');
 			const thumbImgIndex = [].indexOf.call(photosContainer.children, thumbImg.parentNode);
-			
+			window.scrollTo(0, 0);
 			updatePhotoViewer.call(this, photoViewerImg, thumbImg, thumbImgIndex);
 		},
 		closePhotoViewer() {
@@ -105,7 +106,14 @@ function ViewManager() {
 				const modal = document.getElementById('modal');
 				modal.classList.add('hidden');
 				modal.style.height = 'auto';
-				this.clearPhotoViewerImg();
+
+				const photoViewerImg = document.querySelector('#photo-viewer img');
+				const thumbIndex = parseInt(photoViewerImg.getAttribute('data-index'));
+				const thumbImg = document.getElementById('photos-container').children[thumbIndex].firstChild;
+				thumbImg.scrollIntoView({block: "end", behavior: "smooth"});
+				this.clearPhotoViewerImg(photoViewerImg);
+				thumbImg.style.borderColor = thumbImg.getAttribute('data-color');
+				setTimeout(() => { thumbImg.style.borderColor = null; }, 2000);
 			}
 		},
 		clearPhotoViewerImg(photoViewerImg=document.querySelector('#photo-viewer img')) {

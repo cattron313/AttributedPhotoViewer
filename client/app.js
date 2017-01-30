@@ -5,21 +5,19 @@ function App() {
 	// PRIVATE FUNCTIONS AND INTERNAL STATE
 	var page = 1;
 	var loadingImages = false;
+	const PHOTOS_PER_PAGE = 20;
 	function fillPage() {
-		if (view.hasVerticalScroll()) {
-			view.hideLoadingIcon();
-			return;
-		}
+		if (view.hasVerticalScroll()) { return; }
 		view.addNewImages();
 		utils.getImages((json) => {
-			view.replacePlaceHolderImages(json);
+			view.replacePlaceHolderImages(json, PHOTOS_PER_PAGE);
 			setTimeout(() => {
 				return fillPage.call(this);
 			}, 700);
 		}, function() {
 				view.removePlaceHolderImages();
 				view.showErrorMsg();
-		}, this.getPage());
+		}, this.getPage(), PHOTOS_PER_PAGE);
 		this.incrementPage();
 	}
 
@@ -33,12 +31,13 @@ function App() {
 		},
 		init() {
 			utils.getImages((json) => {
-				view.replacePlaceHolderImages(json);
+				view.replacePlaceHolderImages(json, PHOTOS_PER_PAGE);
 				fillPage.call(this);
+				view.hideLoadingIcon();
 			}, function() {
 				view.removePlaceHolderImages();
 				view.showErrorMsg();
-			}, page);
+			}, page, PHOTOS_PER_PAGE);
 			page += 1;
 			view.showLoadingIcon();
 
@@ -108,7 +107,7 @@ function App() {
 					// you're at the bottom of the page
 					view.addNewImages();
 					utils.getImages(function(json) {
-						view.replacePlaceHolderImages(json);
+						view.replacePlaceHolderImages(json, PHOTOS_PER_PAGE);
 						loadingImages = false;
 						view.hideLoadingIcon();
 					}, function() {
@@ -116,7 +115,7 @@ function App() {
 						loadingImages = false;
 						view.showErrorMsg();
 						view.hideLoadingIcon();
-					}, page);
+					}, page, PHOTOS_PER_PAGE);
 					loadingImages = true;
 					page += 1;
 					view.showLoadingIcon();

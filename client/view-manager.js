@@ -32,11 +32,11 @@ function ViewManager() {
 
 	// OBJECT INSTANCE, PUBLIC METHODS
 	return {
-		replacePlaceHolderImages(json) {
+		replacePlaceHolderImages(json, maxPhotos) {
 			// selecting all empty photos that haven't been set yet
 			const query = ".photo.empty img[src='/client/photo-placeholder.png']";
 			const elems = document.querySelectorAll(query);
-			for(let i = 0; i < 20; i++) {
+			for(let i = 0; i < maxPhotos; i++) {
 				/* assuming I will receive 20 images back but may not.
 				 * don't want to rely on the number of elems since it
 				 * may not always be 20 (async updates of view)
@@ -54,8 +54,6 @@ function ViewManager() {
 				  img.setAttribute('data-photographer', json[i].user.name);
 				  img.setAttribute('data-profile', json[i].user.links.html);
 				  img.setAttribute('data-photo-url', json[i].urls.full);
-				} else {
-					img.parentNode.remove();
 				}
 			}
 			this.resizeModal();

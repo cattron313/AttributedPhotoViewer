@@ -1,5 +1,5 @@
 module.exports = {
-	getImages(success, error, page) {
+	getImages(success, error, page, maxPhotos) {
 		const httpRequest = new XMLHttpRequest();
 		httpRequest.onreadystatechange = function () {
 			if (httpRequest.readyState === XMLHttpRequest.DONE) {
@@ -10,7 +10,8 @@ module.exports = {
 	      }
 	    }
 		};
-		httpRequest.open('GET', `http://localhost:3000/images/curated?page=${page}&per_page=20`, true);
+		httpRequest.open('GET', `http://localhost:3000/images/curated?page=${page}&per_page=${maxPhotos}`,
+											true);
 		httpRequest.send();
 	},
 	isMobileDevice () {

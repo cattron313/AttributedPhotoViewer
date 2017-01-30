@@ -10,8 +10,11 @@ module.exports = {
 	      }
 	    }
 		};
-		httpRequest.open('GET', `http://localhost:3000/images/curated?page=${page}&per_page=${maxPhotos}`,
-											true);
+		httpRequest.open(
+			'GET',
+			`https://infinite-plateau-54882.herokuapp.com/images/curated?page=${page}&per_page=${maxPhotos}`,
+			true
+		);
 		httpRequest.send();
 	},
 	isMobileDevice () {

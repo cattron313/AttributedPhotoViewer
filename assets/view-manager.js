@@ -71,7 +71,6 @@
 			showErrorMsg() {
 				const errMsg = document.querySelector('.error');
 				errMsg.classList.remove('hidden');
-				setTimeout(() => { errMsg.classList.add('hidden'); }, 2000);
 			},
 			showLoadingIcon() {
 				document.getElementById('loading').classList.remove('hidden');

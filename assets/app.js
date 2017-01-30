@@ -19,6 +19,7 @@
 			}, function() {
 					view.removePlaceHolderImages();
 					view.showErrorMsg();
+					view.hideLoadingIcon();
 			}, this.getPage(), PHOTOS_PER_PAGE);
 			this.incrementPage();
 		}
@@ -138,9 +139,15 @@
 				}, function() {
 					view.removePlaceHolderImages();
 					view.showErrorMsg();
+					view.hideLoadingIcon();
 				}, page, PHOTOS_PER_PAGE);
 				page += 1;
 				view.showLoadingIcon();
+
+				// adding ability to close error box
+				document.querySelector('.error i').addEventListener('click', function(e) {
+					e.target.parentNode.parentNode.classList.add('hidden');
+				});
 
 				setupPhotosContainerHandlers();
 				setupEventHandlersForModal();

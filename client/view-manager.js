@@ -1,12 +1,22 @@
+const utils = require('./utils');
+
 function ViewManager() {
 	// PRIVATE HELPER METHOD
 	function updatePhotoViewer(photoViewerImg, thumbImg, thumbImgIndex) {
 		photoViewerImg.setAttribute('src', thumbImg.getAttribute('data-photo-url'));
-		if (thumbImg.width <= thumbImg.height) { //if image is, taller than it is wide
-			photoViewerImg.setAttribute('height', window.innerHeight * 0.9);
+		if (thumbImg.width < thumbImg.height) { //if image is, taller than it is wide
+			if (utils.isMobileDevice()) {
+				photoViewerImg.setAttribute('width', window.innerWidth * 0.8);
+			} else {
+				photoViewerImg.setAttribute('height', window.innerHeight * 0.9);
+			}
 		} else {
-			//smaller size than height adjustment to make room for arrows
-			photoViewerImg.setAttribute('width', window.innerWidth * 0.87);
+			if (utils.isMobileDevice()) {
+				photoViewerImg.setAttribute('width', window.innerWidth * 0.8);
+			} else {
+				//smaller size than height adjustment to make room for arrows
+				photoViewerImg.setAttribute('width', window.innerWidth * 0.85);
+			}
 		}
 		photoViewerImg.setAttribute('data-index', thumbImgIndex);
 
@@ -77,12 +87,10 @@ function ViewManager() {
 		},
 		resizeModal() {
 			if (this.modalOpen()) {
-				if (window.innerHeight > document.body.clientHeight) {
-				//if window height larger than document height, set modal height to window height
-					modal.style.height = `${window.innerHeight}px`;
-				} else {
-					modal.style.height = `${document.body.clientHeight}px`;
-				}
+				const winHeight = window.innerHeight;
+				const docHeight = document.body.clientHeight;
+				const photoViewerHeight = window.getComputedStyle(document.getElementById('photo-viewer')).height;
+				modal.style.height = `${Math.max(winHeight, docHeight, parseInt(photoViewerHeight))}px`;
 			}
 		},
 		openPhotoViewer(thumbImg) {

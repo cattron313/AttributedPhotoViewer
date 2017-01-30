@@ -57,7 +57,7 @@ function App() {
 				}
 			});
 
-			 // open modal lightbox
+			// open modal lightbox
 			photosContainer.addEventListener('click', function(e) {
 				const thumbImg = e.target;
 				if (thumbImg.nodeName === 'IMG') {
@@ -66,7 +66,6 @@ function App() {
 			});
 			// close modal lightbox
 			document.querySelector('#modal i').addEventListener('click', view.closePhotoViewer.bind(view));
-
 			// resize modal when photoviewer image loaded to make sure modal completely covers screen
 			document.querySelector('#photo-viewer img').addEventListener('load', view.resizeModal.bind(view));
 

@@ -56,7 +56,8 @@
 					  img.setAttribute('data-color', json[i].color);
 					  img.setAttribute('data-photographer', json[i].user.name);
 					  img.setAttribute('data-profile', json[i].user.links.html);
-					  img.setAttribute('data-photo-url', json[i].urls.full);
+					  const { regular, full } =  json[i].urls;
+					  img.setAttribute('data-photo-url', utils.isMobileDevice() ? regular : full);
 					}
 				}
 				this.resizeModal();

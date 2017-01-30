@@ -67,14 +67,14 @@
 
 			// cycling through images when key is pressed, close modal on Esc key
 			document.body.addEventListener('keydown', function(e) { 
-				switch (e.key) {
-					case 'ArrowLeft':
+				switch (e.keyCode) {
+					case 37:
 						view.changePhotoViewerImg(-1);
 						break;
-					case 'ArrowRight':
+					case 39:
 						view.changePhotoViewerImg(1);
 						break;
-					case 'Escape':
+					case 27:
 						view.closePhotoViewer();
 						break;
 					default:
@@ -84,8 +84,19 @@
 
 		function setupDeviceEventHandlers() {
 			// resize modal on browser resize or device rotation
-			window.addEventListener("orientationchange", view.resizeModal.bind(view));
-			window.onresize = view.resizeModal.bind(view);
+			window.addEventListener("orientationchange", () => {
+				view.resizeModal();
+				view.showLoadingIcon();
+				fillPage.call(this);
+				view.hideLoadingIcon();
+			});
+
+			window.onresize = () => {
+				view.resizeModal();
+				view.showLoadingIcon();
+				fillPage.call(this);
+				view.hideLoadingIcon();
+			};
 
 			window.onscroll = function(e) {
 				// reducing jitter and sensitivty on infinite scroll
@@ -133,7 +144,7 @@
 
 				setupPhotosContainerHandlers();
 				setupEventHandlersForModal();
-				setupDeviceEventHandlers();
+				setupDeviceEventHandlers.call(this);
 			}
 		};
 	}

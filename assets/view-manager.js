@@ -36,7 +36,7 @@
 		return {
 			replacePlaceHolderImages(json, maxPhotos) {
 				// selecting all empty photos that haven't been set yet
-				const query = ".photo.empty img[src='/AttributedPhotoViewer/assets/photo-placeholder.png']";
+				const query = ".photo.empty img[src='/assets/photo-placeholder.png']";
 				const elems = document.querySelectorAll(query);
 				for(let i = 0; i < maxPhotos; i++) {
 					/* assuming I will receive 20 images back but may not.
@@ -83,7 +83,7 @@
 					const wrapper = document.createElement('div');
 					wrapper.classList.add('photo', 'empty');
 					const img = document.createElement('img');
-					img.setAttribute('src', '/AttributedPhotoViewer/assets/photo-placeholder.png');
+					img.setAttribute('src', '/assets/photo-placeholder.png');
 					wrapper.appendChild(img);
 					container.appendChild(wrapper); 
 				}

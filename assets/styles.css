@@ -117,6 +117,7 @@ body {
 
 #image-wrap img {
 	display: block;
+	min-width: 287px;
 }
 
 #image-wrap span {

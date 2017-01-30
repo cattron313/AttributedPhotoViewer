@@ -46,6 +46,7 @@
 					if (i < json.length) {
 						const img = elems.item(i);
 						img.addEventListener('load', () => {
+							img.parentNode.classList.add('fadeIn');
 							img.parentNode.classList.remove('empty');
 						}, { once: true });
 						img.addEventListener('error', (e) => {

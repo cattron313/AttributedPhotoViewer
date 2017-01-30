@@ -1,3 +1,14 @@
+/* Animations */
+@keyframes fadeIn {
+	0% {opacity: 0;}
+	100% {opacity: 1;}
+}
+
+.fadeIn {
+	animation-name: fadeIn;
+}
+
+/* Element Styles */
 body {
 	font-size: 16px;
 	font-family: 'Montserrat', sans-serif;
@@ -15,6 +26,7 @@ body {
 
 .photo {
 	margin: 15px;
+	animation-duration: 2s;
 }
 
 .photo.empty {
@@ -22,7 +34,7 @@ body {
 	width: 150px;
 	height: 150px;
 	box-shadow: inset 0px 0px 34px 5px black;
-  border: 5px ridge #5f6170;
+	border: 5px ridge #5f6170;
 }
 
 .photo > img {

@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "start": "./node_modules/http-server/bin/http-server",
-    "test": "./node_modules/karma/bin/karma start"
+    "test": "./node_modules/mocha/bin/mocha --require ./test/helper.js"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "jsdom": "^9.9.1",
+    "jsdom-global": "^2.1.1",
     "mocha": "^3.2.0"
   },
   "dependencies": {

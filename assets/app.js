@@ -1,46 +1,29 @@
-const utils = require('./utils');
-const view = require('./view-manager');
+(function (window) {
+	window.aplb = window.aplb || {}; // global namespace
+	const { utils, view } = window.aplb;
 
-function App() {
-	// PRIVATE FUNCTIONS AND INTERNAL STATE
-	var page = 1;
-	var loadingImages = false;
-	const PHOTOS_PER_PAGE = 20;
-	function fillPage() {
-		if (view.hasVerticalScroll()) { return; }
-		view.addNewImages();
-		utils.getImages((json) => {
-			view.replacePlaceHolderImages(json, PHOTOS_PER_PAGE);
-			setTimeout(() => {
-				return fillPage.call(this);
-			}, 700);
-		}, function() {
-				view.removePlaceHolderImages();
-				view.showErrorMsg();
-		}, this.getPage(), PHOTOS_PER_PAGE);
-		this.incrementPage();
-	}
+	function App() {
+		// PRIVATE FUNCTIONS AND INTERNAL STATE
+		var page = 1;
+		var loadingImages = false;
+		const PHOTOS_PER_PAGE = 20;
 
-	// OBJECT INSTANCE, PUBLIC METHODS
-	return {
-		getPage() {
-			return page;
-		},
-		incrementPage() {
-			return page += 1;
-		},
-		init() {
+		function fillPage() {
+			if (view.hasVerticalScroll()) { return; }
+			view.addNewImages(PHOTOS_PER_PAGE);
 			utils.getImages((json) => {
 				view.replacePlaceHolderImages(json, PHOTOS_PER_PAGE);
-				fillPage.call(this);
-				view.hideLoadingIcon();
+				setTimeout(() => {
+					return fillPage.call(this);
+				}, 700);
 			}, function() {
-				view.removePlaceHolderImages();
-				view.showErrorMsg();
-			}, page, PHOTOS_PER_PAGE);
-			page += 1;
-			view.showLoadingIcon();
+					view.removePlaceHolderImages();
+					view.showErrorMsg();
+			}, this.getPage(), PHOTOS_PER_PAGE);
+			this.incrementPage();
+		}
 
+		function setupPhotosContainerHandlers() {
 			const photosContainer = document.getElementById('photos-container');
 			if (!utils.isMobileDevice()) {
 				// adding hover affect based on image color
@@ -58,13 +41,16 @@ function App() {
 				});
 			}
 
-			// open modal lightbox
+			// open modal lightbox on thumbnail click
 			photosContainer.addEventListener('click', function(e) {
 				const thumbImg = e.target;
 				if (thumbImg.nodeName === 'IMG') {
 					view.openPhotoViewer(thumbImg);
 				}
 			});
+		}
+
+		function setupEventHandlersForModal() {
 			// close modal lightbox
 			document.querySelector('#modal i').addEventListener('click', view.closePhotoViewer.bind(view));
 			// resize modal when photoviewer image loaded to make sure modal completely covers screen
@@ -94,7 +80,9 @@ function App() {
 					default:
 				}
 			});
+		}
 
+		function setupDeviceEventHandlers() {
 			// resize modal on browser resize or device rotation
 			window.addEventListener("orientationchange", view.resizeModal.bind(view));
 			window.onresize = view.resizeModal.bind(view);
@@ -105,7 +93,7 @@ function App() {
 					 (window.innerHeight + window.pageYOffset - document.body.scrollHeight) >= 0 &&
 					 !view.hasImagePlaceholders() && !view.modalOpen() && !loadingImages) {
 					// you're at the bottom of the page
-					view.addNewImages();
+					view.addNewImages(PHOTOS_PER_PAGE);
 					utils.getImages(function(json) {
 						view.replacePlaceHolderImages(json, PHOTOS_PER_PAGE);
 						loadingImages = false;
@@ -122,7 +110,33 @@ function App() {
 				}
 			};
 		}
-	};
-}
 
-module.exports = new App();
+		// OBJECT INSTANCE, PUBLIC METHODS
+		return {
+			getPage() {
+				return page;
+			},
+			incrementPage() {
+				return page += 1;
+			},
+			init() {
+				utils.getImages((json) => {
+					view.replacePlaceHolderImages(json, PHOTOS_PER_PAGE);
+					fillPage.call(this);
+					view.hideLoadingIcon();
+				}, function() {
+					view.removePlaceHolderImages();
+					view.showErrorMsg();
+				}, page, PHOTOS_PER_PAGE);
+				page += 1;
+				view.showLoadingIcon();
+
+				setupPhotosContainerHandlers();
+				setupEventHandlersForModal();
+				setupDeviceEventHandlers();
+			}
+		};
+	}
+
+	window.aplb.app = new App();
+})(window);

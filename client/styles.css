@@ -59,6 +59,20 @@ body {
 	display: none;
 }
 
+.error {
+	text-align: center;
+  background: #ffb1b8;
+  border: 2px groove red;
+  width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.error.hidden {
+	display: none;
+}
+
 #modal {
 	position: absolute;
   top: 0;

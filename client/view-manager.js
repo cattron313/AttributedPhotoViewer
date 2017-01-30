@@ -33,14 +33,16 @@ function ViewManager() {
 	// OBJECT INSTANCE, PUBLIC METHODS
 	return {
 		replacePlaceHolderImages(json) {
-			const elems = document.querySelectorAll(".photo.empty");
+			// selecting all empty photos that haven't been set yet
+			const query = ".photo.empty img[src='/client/photo-placeholder.png']";
+			const elems = document.querySelectorAll(query);
 			for(let i = 0; i < 20; i++) {
 				/* assuming I will receive 20 images back but may not.
 				 * don't want to rely on the number of elems since it
 				 * may not always be 20 (async updates of view)
 				 */
 				if (i < json.length) {
-					const img = elems.item(i).firstChild;
+					const img = elems.item(i);
 					img.addEventListener('load', () => {
 						img.parentNode.classList.remove('empty');
 					}, { once: true });
@@ -63,6 +65,17 @@ function ViewManager() {
 			for(let i = 0; i < elems.length; i++) {
 				elems[i].remove();
 			}
+		},
+		showErrorMsg() {
+			const errMsg = document.querySelector('.error');
+			errMsg.classList.remove('hidden');
+			setTimeout(() => { errMsg.classList.add('hidden'); }, 2000);
+		},
+		showLoadingIcon() {
+			document.getElementById('loading').classList.remove('hidden');
+		},
+		hideLoadingIcon() {
+			document.getElementById('loading').classList.add('hidden');
 		},
 		addNewImages() {
 			const container = document.getElementById('photos-container');

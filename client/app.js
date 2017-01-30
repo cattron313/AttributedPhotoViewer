@@ -7,7 +7,7 @@ function App() {
 	var loadingImages = false;
 	function fillPage() {
 		if (view.hasVerticalScroll()) {
-			document.getElementById('loading').classList.add('hidden');
+			view.hideLoadingIcon();
 			return;
 		}
 		view.addNewImages();
@@ -18,7 +18,7 @@ function App() {
 			}, 700);
 		}, function() {
 				view.removePlaceHolderImages();
-				alert('There was a problem with the request. Please try again later.');
+				view.showErrorMsg();
 		}, this.getPage());
 		this.incrementPage();
 	}
@@ -37,10 +37,10 @@ function App() {
 				fillPage.call(this);
 			}, function() {
 				view.removePlaceHolderImages();
-				alert('There was a problem with the request. Please try again later.');
+				view.showErrorMsg();
 			}, page);
 			page += 1;
-			document.getElementById('loading').classList.remove('hidden');
+			view.showLoadingIcon();
 
 			const photosContainer = document.getElementById('photos-container');
 			if (!utils.isMobileDevice()) {
@@ -110,16 +110,16 @@ function App() {
 					utils.getImages(function(json) {
 						view.replacePlaceHolderImages(json);
 						loadingImages = false;
-						document.getElementById('loading').classList.add('hidden');
+						view.hideLoadingIcon();
 					}, function() {
 						view.removePlaceHolderImages();
 						loadingImages = false;
-						alert('There was a problem with the request. Please try again later.');
-						document.getElementById('loading').classList.add('hidden');
+						view.showErrorMsg();
+						view.hideLoadingIcon();
 					}, page);
 					loadingImages = true;
 					page += 1;
-					document.getElementById('loading').classList.remove('hidden');
+					view.showLoadingIcon();
 				}
 			};
 		}

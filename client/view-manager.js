@@ -47,7 +47,6 @@ function ViewManager() {
 					img.addEventListener('error', (e) => {
 						img.parentNode.remove();
 					});
-					console.log(json[i].urls.thumb);
 					img.setAttribute('src', json[i].urls.thumb);
 				  img.setAttribute('data-color', json[i].color);
 				  img.setAttribute('data-photographer', json[i].user.name);
@@ -92,6 +91,11 @@ function ViewManager() {
 				const docHeight = document.body.clientHeight;
 				const photoViewerHeight = window.getComputedStyle(document.getElementById('photo-viewer')).height;
 				modal.style.height = `${Math.max(winHeight, docHeight, parseInt(photoViewerHeight))}px`;
+
+				const winWidth = window.innerWidth;
+				const docWidth = document.body.clientWidth;
+				const photoViewerWidth = window.getComputedStyle(document.getElementById('photo-viewer')).width;
+				modal.style.width = `${Math.max(winWidth, docWidth, parseInt(photoViewerWidth))}px`;
 			}
 		},
 		openPhotoViewer(thumbImg) {

@@ -58,7 +58,7 @@ function App() {
 					}
 				});
 			}
-			
+
 			// open modal lightbox
 			photosContainer.addEventListener('click', function(e) {
 				const thumbImg = e.target;
@@ -95,6 +95,10 @@ function App() {
 					default:
 				}
 			});
+
+			// resize modal on browser resize or device rotation
+			window.addEventListener("orientationchange", view.resizeModal.bind(view));
+			window.onresize = view.resizeModal.bind(view);
 
 			window.onscroll = function(e) {
 				// reducing jitter and sensitivty on infinite scroll

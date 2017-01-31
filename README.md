@@ -16,7 +16,7 @@ I decided to keep this app very simple (based on the instructions) and not use a
 
 I loaded as much content initially in index.html so that the user would see content as soon as possible.
 
-I separated most of the app functionality into two parts: app.js and view-manager.js. Since most of the view content is already loaded in the html. ViewManager just manipulates the DOM to show and hide necessary items. App makes API calls for images and sets up the event handlers.
+I separated most of the app functionality into two parts: app.js and view-manager.js. Since most of the view content is already loaded in the html. ViewManager just manipulates the DOM to show, hide, create, or update necessary items. App makes API calls (through a utility method) for images and sets up the event handlers.
 
 ### Performance
 I spent some time thinking about the placeholder image and what format I wanted to store the image in. A placeholder image must render very fast otherwise, it loses its purpose and value. I was debating between base64 and a png. I eventually decided on png after a few comparisons loading a page with each. Png was slightly faster (I think because the size of html was pretty large with 20 base64 images in there) and had the added bonus of allowing an easier to read index.html file. I also compressed the png with [ImageOptim][https://imageoptim.com/] to optimize for a faster download.
